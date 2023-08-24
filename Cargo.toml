@@ -1,0 +1,18 @@
+[package]
+name = "oxidized_ga"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "oxidized_ga"
+# "cdylib" is necessary to produce a shared library for Python to import from.
+crate-type = ["cdylib"]
+
+[dependencies]
+rand = "0.8.5"
+pyo3 = "0.18.3"
+numpy = "0.18"
+ndarray = "0.15.6"
+rayon = "1.7.0"
