@@ -16,7 +16,7 @@
 
 ### Neural Network
 
-## Neural Network Get Bits
+### Neural Network Get Bits
 
 ### Neural Network Decode
 
