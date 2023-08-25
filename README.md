@@ -2,7 +2,7 @@
 
 ## Core Functionality
 
-### BitString
+### Bit String
 
 ### Genetic Algorithm
 
