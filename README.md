@@ -4,6 +4,8 @@
 
 ### Bit String
 
+### Decode
+
 ### Genetic Algorithm
 
 ## Neural Networks
@@ -14,6 +16,8 @@
 
 ### Neural Network
 
+## Neural Network Get Bits
+
 ### Neural Network Decode
 
 ### Neural Network Genetic Algorithm
@@ -21,5 +25,11 @@
 ## Graphs
 
 ### Graph
+
+### Graph Mutate
+
+### Graph Isolate Subgraph
+
+### Graph Crossover
 
 ### Graph Genetic Algorithm
