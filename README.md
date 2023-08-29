@@ -22,9 +22,15 @@ Sets the string value of the BitString to a given string
 
 ---
 
+`oxidized_ga.BitString.length()`
+
 Returns the length of the given BitString
 
-`oxidized_ga.BitString.length()`
+---
+
+`oxidized_ga.BitString.string`
+
+Returns the string stored within the class
 
 ---
 
@@ -34,6 +40,13 @@ Returns the length of the given BitString
 
 `oxidized_ga.decode(bitstring, lower_bounds, upper_bounds, n_bits)`
 
+Given a BitString, decodes the binary into usable float values (using the number of bits provided) and scales it to the given bounds
+
+- `bitstring`: A bitstring represented as a string (`ga.BitString.string`)
+- `lower_bounds`: (numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
+- `upper_bounds`: (numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
+- `n_bits`: The (positive) integer number of bits each value within the bitstring takes up
+
 ---
 
 ### Genetic Algorithm
@@ -41,6 +54,25 @@ Returns the length of the given BitString
 ---
 
 `genetic_algo(objective_func, lower_bounds, upper_bounds, n_bits, n_iter, n_pop, r_cross, r_mut, k, settings, workers, total_n_bits, print_output)`
+
+Performs the genetic algorithm given an objective function
+
+- `objective_func`: A python function that has the arguments `(string, lower_bounds, upper_bounds, n_bits, settings)` that the BitStrings will be scored on
+- `lower_bounds`: (numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
+- `upper_bounds`: (numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
+- `n_bits`: The (positive) integer number of bits each value within the BitString takes up
+- `n_iter`: The (positive) integer number of iterations to perform the genetic algorithm for
+- `n_pop`: The (positive, even) integer size of the population of BitStrings to evaluate
+- `r_cross`: The (float) chance of performing crossover
+- `r_mut`: The (float) chance of a `0` or `1` flipping during mutation
+- `k`: The (positive integer) number of individuals to pull from while performing each tournament selection
+- `settings`: (optional, defaults to {}) any secondary parameters to be passed to the objective function
+- `workers`: (optional, defaults to 0) the level of parallelism to use
+  - `0`: No parallelism
+  - `1`: Paralleism only during creation of mutations and execution of crossover functions
+  - `>=2`: Parallelism during mutation and crossover as well as the amount of threads to use while executing the objective functions
+- `total_n_bits`: (optional, defaults to None) the total amount of bits the BitStrings should be
+- `print_output`: (optional, defaults to None, automatically print output) boolean as whether or not to print information about the genetic algorithm while running
 
 ---
 
