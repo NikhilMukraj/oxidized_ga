@@ -43,8 +43,8 @@ Returns the string stored within the class
 Given a BitString, decodes the binary into usable float values (using the number of bits provided) and scales it to the given bounds
 
 - `bitstring`: A bitstring represented as a string (`ga.BitString.string`)
-- `lower_bounds`: (numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
-- `upper_bounds`: (numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
+- `lower_bounds`: (1D numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
+- `upper_bounds`: (1D numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
 - `n_bits`: The (positive) integer number of bits each value within the bitstring takes up
 
 ---
@@ -58,8 +58,8 @@ Given a BitString, decodes the binary into usable float values (using the number
 Performs the genetic algorithm given an objective function
 
 - `objective_func`: A python function that has the arguments `(string, lower_bounds, upper_bounds, n_bits, settings)` that the BitStrings will be scored on
-- `lower_bounds`: (numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
-- `upper_bounds`: (numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
+- `lower_bounds`: (1D numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
+- `upper_bounds`: (1D numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
 - `n_bits`: The (positive) integer number of bits each value within the BitString takes up
 - `n_iter`: The (positive) integer number of iterations to perform the genetic algorithm for
 - `n_pop`: The (positive, even) integer size of the population of BitStrings to evaluate
@@ -88,6 +88,10 @@ Activation Types: `ReLU`, `Sigmoid`, `Tanh`, `Swish`, `ELU`
 
 `oxidized_ga.Activation.calculate(x)`
 
+Applies the given activation function on a given value
+
+`x`: A numerical value
+
 ---
 
 ### Layer
@@ -96,17 +100,36 @@ Activation Types: `ReLU`, `Sigmoid`, `Tanh`, `Swish`, `ELU`
 
 `oxidized_ga.Layer(size, weights, biases, activation)`
 
+Create a layer class given the shape of the layer, the weight values, the biases, and an activation
+
+`size`: Positive integer value specifying the shape of the layer
+`weights`: A 2D numpy float32 array that contains the weight specifications
+`biases`: A 1D numpy float32 array that contains the bias specifications
+`activation`: A `oxidized_ga.Activation` type
+
 ---
 
 `oxidized_ga.Layer.set_weights(new_weights)`
+
+Resets the given weights with a set of weights
+
+`new_weights`: A 2D numpy float32 array that contains the weight specifications
 
 ---
 
 `oxidized_ga.Layer.set_biases(new_biases)`
 
+Resets the given weights with a set of bias
+
+`new_biases`: A 1D numpy float32 array that contains the bias specifications
+
 ---
 
 `oxidized_ga.Layer.calculate(inputs)`
+
+Calculate the output of a layer given some inputs
+
+`inputs`: A 1D numpy float32 array that contains the inputs
 
 ---
 
