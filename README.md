@@ -102,7 +102,7 @@ Applies the given activation function on a given value
 
 Create a layer class given the shape of the layer, the weight values, the biases, and an activation
 
-`size`: Positive integer value specifying the shape of the layer
+`size`: The (positive) integer value specifying the shape of the layer
 `weights`: A 2D numpy float32 array that contains the weight specifications
 `biases`: A 1D numpy float32 array that contains the bias specifications
 `activation`: A `oxidized_ga.Activation` type
@@ -139,21 +139,45 @@ Calculate the output of a layer given some inputs
 
 `oxidized_ga.NeuralNetwork(size, layers)`
 
+Creates a NeuralNetwork class given the size of the network and how many layers
+
+- `size`: The (positive) integer number of layers within the neural network
+- `layers`: A list of Layer classes to use within the neural network, the output shape of the previous neural network (which should mean that the first dimensions of one layer should be the same as the second dimension of the next layer)
+
 ---
 
 `oxidized_ga.NeuralNetwork.predict(inputs)`
+
+Calculates the output of the neural network given some inputs
+
+- `inputs`: A 1D numpy float32 array that contains the input values to use
 
 ---
 
 `oxidized_ga.NeuralNetwork.set_layer(index, new_weights, new_biases)`
 
+Resets the weights or biases of a given layer given the new values and the index of the layer
+
+- `index`: The index of the layer to edit
+- `new_weights`: An (optional, defaults to `None`) 2D numpy float32 array containing the new weight values that must match the shape of the original weights
+- `new_biases`: An (optional, defaults to `None`) 1D numpy float32 array containing the new bias values that must match the shape of the original biases
+
 ---
 
 `oxidized_ga.NeuralNetwork.re_init_layer(index, new_layer)`
 
+Re-initializes a given layer with another layer by index
+
+- `index`: A (positive) integer representing the index of the layer to edit
+- `new_layer`: A new Layer class that matches the shape of the previous layer's weights and biases
+
 ---
 
 `oxidized_ga.NeuralNetwork.add_layer(new_layer)`
+
+Adds a new layer to the NeuralNetwork class given a Layer class
+
+- `new_layer`: A new layer which weights' second dimensions match the first dimensions of the last layer's weights
 
 ---
 
@@ -162,6 +186,22 @@ Calculate the output of a layer given some inputs
 ---
 
 `oxidized_ga.neural_network_get_bits(precision, activation_precision, architecture)`
+
+Returns the amount of bits that a neural network will take up given the precision of the weights and biases, the precision of the representation of the activation functions, and the architecture
+
+- `precision`: The number of bits each weight or bias will take up
+- `activation_precision`: The number of bits each activation function will take up
+- `architecture`: A dictionary storing a representation of the neural network in the following manner:
+
+  ```python
+  {
+    index_number_1: [[oxidized_ga.Activation.type1, oxidized_ga.Activation.type2], [input_shape_1, input_shape_2]],
+    index_number_2: [[oxidized_ga.Activation.type2, oxidized_ga.Activation.type3, oxidized_ga.Activation.type4], [input_shape_2, input_shape_3]],
+    ...
+  }
+  ```
+
+  - The index number specifies where the place the layer, and chooses an activation type from the list provided, and uses the input shapes to determine the shape of the weights and biases
 
 ---
 

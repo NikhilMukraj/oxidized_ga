@@ -1,5 +1,7 @@
 # todo
 
+- make the parameters to neural network initializer take the layers and just use that to calculate the size
+- change neuralnetwork archectiure function to take in a list of the activation functions and shapes, change it so the full shape of the weights is calculated automatically so you only need to specify one dimension in each layer (add an end layer type with the final output shape)
 - try running with maturin or cargo --release flag to see how much that speeds up operations
   - maturin develop --release
 - cleaner objective function errors
