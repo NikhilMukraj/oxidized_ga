@@ -181,6 +181,20 @@ Adds a new layer to the NeuralNetwork class given a Layer class
 
 ---
 
+### Architecture Explanation
+
+```python
+  {
+    index_number_1: [[oxidized_ga.Activation.type1, oxidized_ga.Activation.type2], [input_shape_1, input_shape_2]],
+    index_number_2: [[oxidized_ga.Activation.type2, oxidized_ga.Activation.type3, oxidized_ga.Activation.type4], [input_shape_2, input_shape_3]],
+    ...
+  }
+  ```
+
+The index number specifies where the place the layer, and chooses an activation type from the list provided, and uses the input shapes to determine the shape of the weights and biases
+
+---
+
 ### Neural Network Get Bits
 
 ---
@@ -191,17 +205,7 @@ Returns the amount of bits that a neural network will take up given the precisio
 
 - `precision`: The number of bits each weight or bias will take up
 - `activation_precision`: The number of bits each activation function will take up
-- `architecture`: A dictionary storing a representation of the neural network in the following manner:
-
-  ```python
-  {
-    index_number_1: [[oxidized_ga.Activation.type1, oxidized_ga.Activation.type2], [input_shape_1, input_shape_2]],
-    index_number_2: [[oxidized_ga.Activation.type2, oxidized_ga.Activation.type3, oxidized_ga.Activation.type4], [input_shape_2, input_shape_3]],
-    ...
-  }
-  ```
-
-  - The index number specifies where the place the layer, and chooses an activation type from the list provided, and uses the input shapes to determine the shape of the weights and biases
+- `architecture`: A dictionary storing a representation of the neural network (see [architecture explanation](#architecture-explanation))
 
 ---
 
@@ -209,7 +213,16 @@ Returns the amount of bits that a neural network will take up given the precisio
 
 ---
 
-`oxidized_ga.neural_network_decode(bitstring, lower_bounds, upper_bounds, n_bits, activation_precision, architecture)`
+`oxidized_ga.neural_network_decode(bitstring, lower_bounds, upper_bounds, precision, activation_precision, architecture)`
+
+Decodes a BitString into a NeuralNetwork given the bounds, the precision, the activation's precision, and the architecture
+
+- `bitstring`: A bitstring represented as a string (`ga.BitString.string`)
+- `lower_bounds`: (1D numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
+- `upper_bounds`: (1D numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
+- `precision`: The number of bits each weight or bias will take up
+- `activation_precision`: The number of bits each activation function will take up
+- `architecture`: A dictionary storing a representation of the neural network (see [architecture explanation](#architecture-explanation))
 
 ---
 
@@ -217,7 +230,25 @@ Returns the amount of bits that a neural network will take up given the precisio
 
 ---
 
-`oxidized_ga.neural_net_genetic_algo(objective_func, lower_bounds, upper_bounds, n_bits, activation_precision, architecture, n_iter, n_pop, r_cross, r_mut, k, settings, workers, print_output)`
+`oxidized_ga.neural_net_genetic_algo(objective_func, lower_bounds, upper_bounds, precision, activation_precision, architecture, n_iter, n_pop, r_cross, r_mut, k, settings, workers, print_output)`
+
+- `objective_func`: A python function that has the arguments `(string, lower_bounds, upper_bounds, n_bits, settings)` that the BitStrings will be scored on
+- `lower_bounds`: (1D numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
+- `upper_bounds`: (1D numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
+- `precision`: The number of bits each weight or bias will take up
+- `activation_precision`: The number of bits each activation function will take up
+- `n_iter`: The (positive) integer number of iterations to perform the genetic algorithm for
+- `n_pop`: The (positive, even) integer size of the population of BitStrings to evaluate
+- `r_cross`: The (float) chance of performing crossover
+- `r_mut`: The (float) chance of a `0` or `1` flipping during mutation
+- `k`: The (positive integer) number of individuals to pull from while performing each tournament selection
+- `settings`: (optional, defaults to {}) any secondary parameters to be passed to the objective function
+- `workers`: (optional, defaults to 0) the level of parallelism to use
+  - `0`: No parallelism
+  - `1`: Paralleism only during creation of mutations and execution of crossover functions
+  - `>=2`: Parallelism during mutation and crossover as well as the amount of threads to use while executing the objective functions
+- `total_n_bits`: (optional, defaults to None) the total amount of bits the BitStrings should be
+- `print_output`: (optional, defaults to None, automatically print output) boolean as whether or not to print information about the genetic algorithm while running
 
 ---
 
@@ -229,17 +260,29 @@ Returns the amount of bits that a neural network will take up given the precisio
 
 `oxidized_ga.Graph(nodes)`
 
+Create a Graph class with no edges given a dictionary of node and value key-value pairs
+
+- `nodes`: A dictionary of nodes (integers >=0) and their values (integers >=0)
+
 ---
 
 `oxidized_ga.Graph.get_nodes()`
+
+Returns a dictionary of the nodes and their values
 
 ---
 
 `oxidized_ga.Graph.reset_with_nodes(new_nodes)`
 
+Resets the Graph class with a new set of nodes
+
+- `new_nodes`: A dictionary of nodes (integers >=0) and their values (integers >=0)
+
 ---
 
 `oxidized_ga.Graph.get_matrix()`
+
+Returns an adjacency matrix with the nodes and their edges
 
 ---
 
