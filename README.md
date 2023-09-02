@@ -189,7 +189,7 @@ Adds a new layer to the NeuralNetwork class given a Layer class
     index_number_2: [[oxidized_ga.Activation.type2, oxidized_ga.Activation.type3, oxidized_ga.Activation.type4], [input_shape_2, input_shape_3]],
     ...
   }
-  ```
+```
 
 The index number specifies where the place the layer, and chooses an activation type from the list provided, and uses the input shapes to determine the shape of the weights and biases
 
@@ -260,7 +260,7 @@ Decodes a BitString into a NeuralNetwork given the bounds, the precision, the ac
 
 `oxidized_ga.Graph(nodes)`
 
-Create a Graph class with no edges given a dictionary of node and value key-value pairs
+Create a (directed) Graph class with no edges given a dictionary of node and value key-value pairs
 
 - `nodes`: A dictionary of nodes (integers >=0) and their values (integers >=0)
 
@@ -288,33 +288,84 @@ Returns an adjacency matrix with the nodes and their edges
 
 `oxidized_ga.Graph.edit_edge(start, end, weight)`
 
+Edits the weight value of a given edge using the start and end nodes
+
+- `start`: Start node (unsigned integer)
+- `end`: End node (unsigned integer)
+- `weight`: Weight value (float32)
+
 ---
 
 `oxidized_ga.Graph.edit_edges(edges_to_edit)`
+
+Edits a list of edges using the start node, end node, and weight provided
+
+- `edges_to_edit`: A list of edges to edit in the following format:
+
+```python
+[
+  [start1, end1, weight1],
+  [start2, end2, weight2],
+  [start3, end3, weight3],
+  ...
+]
+```
 
 ---
 
 `oxidized_ga.Graph.add_vertex(value)`
 
+Adds a node with a value
+
+- `value`: Unsigned integer or None, if None the value defaults to 0
+
 ---
 
 `oxidized_ga.Graph.add_vertices(vertices)`
+
+Adds the given amount of vertices to the Graph with the default
+
+- `vertices`: (unsigned integer or none) number of vertices to add with the default value of zero
 
 ---
 
 `oxidized_ga.Graph.add_vertices_by_value(values)`
 
+Adds a node for each value within the input with the value that the input specifies
+
+- `values`: A list of unsigned integers
+
 ---
 
 `oxidized_ga.Graph.update_node_value(node, new_value)`
+
+Updates a node with the specified value
+
+- `node`: Unsigned integer specifying which node
+- `new_value`: Unsigned integer to update node with
 
 ---
 
 `oxidized_ga.Graph.get_all_edges()`
 
+Returns every edge in the Graph in the following format:
+
+```python
+[
+  [start1, end1, weight1],
+  [start2, end2, weight2],
+  [start3, end3, weight3],
+  ...
+]
+```
+
 ---
 
 `oxidized_ga.Graph.is_end_node(node)`
+
+Returns a boolean specifying whether or not the given node is an end node (connected by only one other node)
+
+- `node`: Unsigned integer specifying where the node is
 
 ---
 
