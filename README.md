@@ -371,13 +371,26 @@ Returns a boolean specifying whether or not the given node is an end node (conne
 
 `oxidized_ga.Graph.get_connected_component(start_node, disconnected_nodes)`
 
+Returns the connected subgraph to the given start node using breath first search, cuts the subgraph off at any specified disconnected nodes
+
+- `start_node`: Unsigned integer specifying where the start node is
+- `disconnected_nodes`: A list of unsigned integers specifying which nodes to ignore, (leave list empty if no nodes)
+
 ---
 
 `oxidized_ga.Graph.get_all_neighbors(node)`
 
+Returns all nodes connected to the specified node
+
+- `node`: Unsigned integer specifying where the start node is
+
 ---
 
 `oxidized_ga.Graph.replace_subgraph(subgraph, start_node, other_node)`
+
+- `subgraph`: Graph class to add into
+- `start_node`: Unsigned integer where to start replacing
+- `other_node`: (Optional, if `start_node` is end node) unsigned integer specifying end part of edge to replace
 
 ---
 
