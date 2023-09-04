@@ -71,8 +71,8 @@ Performs the genetic algorithm given an objective function
   - `0`: No parallelism
   - `1`: Paralleism only during creation of mutations and execution of crossover functions
   - `>=2`: Parallelism during mutation and crossover as well as the amount of threads to use while executing the objective functions
-- `total_n_bits`: (optional, defaults to None) the total amount of bits the BitStrings should be
-- `print_output`: (optional, defaults to None, automatically print output) boolean as whether or not to print information about the genetic algorithm while running
+- `total_n_bits`: (optional, defaults to `None`) the total amount of bits the BitStrings should be
+- `print_output`: (optional, defaults to `None`, automatically print output) boolean as whether or not to print information about the genetic algorithm while running
 
 ---
 
@@ -247,8 +247,8 @@ Decodes a BitString into a NeuralNetwork given the bounds, the precision, the ac
   - `0`: No parallelism
   - `1`: Paralleism only during creation of mutations and execution of crossover functions
   - `>=2`: Parallelism during mutation and crossover as well as the amount of threads to use while executing the objective functions
-- `total_n_bits`: (optional, defaults to None) the total amount of bits the BitStrings should be
-- `print_output`: (optional, defaults to None, automatically print output) boolean as whether or not to print information about the genetic algorithm while running
+- `total_n_bits`: (optional, defaults to `None`) the total amount of bits the BitStrings should be
+- `print_output`: (optional, defaults to `None`, automatically print output) boolean as whether or not to print information about the genetic algorithm while running
 
 ---
 
@@ -317,7 +317,7 @@ Edits a list of edges using the start node, end node, and weight provided
 
 Adds a node with a value
 
-- `value`: Unsigned integer or None, if None the value defaults to 0
+- `value`: Unsigned integer or `None`, if `None` the value defaults to 0
 
 ---
 
@@ -325,7 +325,7 @@ Adds a node with a value
 
 Adds the given amount of vertices to the Graph with the default
 
-- `vertices`: (unsigned integer or none) number of vertices to add with the default value of zero
+- `vertices`: (unsigned integer or `None`) number of vertices to add with the default value of zero
 
 ---
 
@@ -396,21 +396,57 @@ Returns all nodes connected to the specified node
 
 `oxidized_ga.Graph.mutate_types(rules)`
 
+Mutates the value (type) of the node given a ruleset
+
+- `rules`: A dictionary in the following format that specifies what values a given type can mutate into:
+
+```python
+{
+  0 : [1, 2, 3],
+  1 : [0, 3],
+  2 : [],
+  3 : [1, 2],
+  ...
+}
+```
+
 ---
 
 `oxidized_ga.Graph.mutate_edges(rules, edges)`
+
+Mutates the edges of the Graph given a ruleset and what values edges can be generated as
+
+- `rules`: A ruleset specifying which nodes can connect to one another by edges
+- `edges`: A 1D numpy float32 array of length 2 that specifes the lower and upper bound the edges can be generated within, defaults to `None` meaning that all edges will default to be generated with the value of 1.0
 
 ---
 
 `oxidized_ga.Graph.mutate_vertices(add_types, delete_types)`
 
+Adds or removes vertices given a set of node types that can be added or that can be deleted
+
+- `add_types`: A 1D numpy uint32 or uint64 array that specifies what vertex types can be added
+- `delete_types`: A 1D numpy uint32 or uint64 array that specifies what vertex types can be deleted
+
 ---
 
 `oxidized_ga.Graph.mutate_weights(lower, upper)`
 
+Mutates a random edge weight given a lower and upper bound
+
+- `lower`: Float lower bound
+- `upper`: Float upper bound
+
 ---
 
-`oxidized_ga.Graph.create_random(size_range, edge_prob, edge_range, values)`
+`oxidized_ga.Graph.create_random(size_range, prob, edge_range, values)`
+
+Creates a random graph given the potential size, the probability of an edge being created, the range of weights those edges can generate with, and the types of nodes that can be generated
+
+- `size_range`: A tuple of two positive integers that specifies the inclusive range that graphs can be generated from, (only generates one size if first and second value are the same)
+- `prob`: Probability of generating an edge, (between 0 and 1)
+- `edge_range`: A tuple of two floats that specifies the lower and upper bounds at which eac edge can generate, (defaults to `None`, where every edge generated is equal to 1.0)
+- `values`: A 1D numpy array of uint32 or uint64 of the potential values of each node that can be generated, (defaults to `None`, where every vertex has a value of 0)
 
 ---
 
