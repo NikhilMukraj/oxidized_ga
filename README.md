@@ -232,6 +232,8 @@ Decodes a BitString into a NeuralNetwork given the bounds, the precision, the ac
 
 `oxidized_ga.neural_net_genetic_algo(objective_func, lower_bounds, upper_bounds, precision, activation_precision, architecture, n_iter, n_pop, r_cross, r_mut, k, settings, workers, print_output)`
 
+Performs a genetic algorithm using the provided objective function ultizing the NeuralNetwork class
+
 - `objective_func`: A python function that has the arguments `(string, lower_bounds, upper_bounds, n_bits, settings)` that the BitStrings will be scored on
 - `lower_bounds`: (1D numpy float32 array, one element for each value decode should return) the lower bound to scale the output of decode to
 - `upper_bounds`: (1D numpy float32 array, one element for each value decode should return) the upper bound to scale the output of decode to
@@ -416,7 +418,18 @@ Mutates the value (type) of the node given a ruleset
 
 Mutates the edges of the Graph given a ruleset and what values edges can be generated as
 
-- `rules`: A ruleset specifying which nodes can connect to one another by edges
+- `rules`: A ruleset in the following format specifying which nodes can connect to one another by edges:
+
+```python
+{
+  0 : [1, 2, 3],
+  1 : [0, 3],
+  2 : [],
+  3 : [1, 2],
+  ...
+}
+```
+
 - `edges`: A 1D numpy float32 array of length 2 that specifes the lower and upper bound the edges can be generated within, defaults to `None` meaning that all edges will default to be generated with the value of 1.0
 
 ---
@@ -456,6 +469,39 @@ Creates a random graph given the potential size, the probability of an edge bein
 
 `oxidized_ga.mutate(graph, r_mut, reps=None, type_rules, vertex_rules, edge_rules, weight_rules, possible_edges)`
 
+Mutates a graph given a a chance for mutation, how many times to repeat mutations, and the given rulesets
+
+- `graph`: A Graph class
+- `r_mut`: A float between 0 and 1 stating that chance of the Graph mutating
+- `reps`: A positive integer representing how many times to repeat mutation process with a chance of `r_mut`, (defaults to `None`, meaning it mutates once)
+- `type_rules`: A dictionary in the following format that specifies what values a given type can mutate into, (defaults to `None`):
+
+```python
+{
+  0 : [1, 2, 3],
+  1 : [0, 3],
+  2 : [],
+  3 : [1, 2],
+  ...
+}
+```
+
+- `vertex_rules`: A tuple of two 1D numpy uint32 or uint64 arrays, which respectively represent what types can be added or deleted, (defaults to `None`)
+- `edge_rules`: A ruleset in the following format specifying which nodes can connect to one another by edges, (defaults to `None`):
+
+```python
+{
+  0 : [1, 2, 3],
+  1 : [0, 3],
+  2 : [],
+  3 : [1, 2],
+  ...
+}
+```
+
+- `possible_edges`: A 1D numpy float32 array of length 2 that specifes the lower and upper bound the edges can be generated within, defaults to `None` meaning that all edges will default to be generated with the value of 1.0
+- `weight_rules`: A tuple of two floats, a lower bound and upper bound for mutating the value of an edge, (defaults to `None` meaning all edges generated will be 1.0)
+
 ---
 
 ### Graph Isolate Subgraph
@@ -463,6 +509,11 @@ Creates a random graph given the potential size, the probability of an edge bein
 ---
 
 `oxidized_ga.isolate_random_subgraph(graph, return_vertices)`
+
+Returns a random subgraph within a Graph class
+
+- `graph`: Graph class to select a subgraph from
+- `return_vertices`: A boolean stating whether to return a vector of the selected nodes within the original Graph that are now in the subgraph
 
 ---
 
@@ -472,6 +523,12 @@ Creates a random graph given the potential size, the probability of an edge bein
 
 `oxidized_ga.crossover(graph1, graph2, r_cross)`
 
+Performs a crossover to mix the traits between two graphs
+
+- `graph1`: A parent Graph class
+- `graph2`: A parent Graph class
+- `r_cross`: Probability of crossover being performed
+
 ---
 
 ### Graph Genetic Algorithm
@@ -479,6 +536,47 @@ Creates a random graph given the potential size, the probability of an edge bein
 ---
 
 `oxidized_ga.graph_genetic_algo(objective_func, n_iter, n_pop, r_cross, r_mut, k, size_range, initialization_prob, settings, parallel, reps, edge_range, values, type_rules, vertex_rules, edge_rules,  weight_rules, possible_edges)`
+
+Performs a genetic algorithm using the provided objective function ultizing the Graph class
+
+- `objective_func`: A python function that has the arguments `(string, lower_bounds, upper_bounds, n_bits, settings)` that the BitStrings will be scored on
+- `n_iter`: The (positive) integer number of iterations to perform the genetic algorithm for
+- `n_pop`: The (positive, even) integer size of the population of BitStrings to evaluate
+- `r_cross`: The (float) chance of performing crossover
+- `r_mut`: The (float) chance of a `0` or `1` flipping during mutation
+- `k`: The (positive integer) number of individuals to pull from while performing each tournament selection
+- `size_range`: A tuple of two positive integers that specifies the inclusive range that graphs can be generated from, (only generates one size if first and second value are the same)
+- `initialization_prob`: Probability of generating an edge, (between 0 and 1)
+- `settings`: (optional, defaults to {}) any secondary parameters to be passed to the objective function
+- `parallel`: Boolean as to whether or not to use parallelism during mutation and crossover
+- `reps`: A positive integer representing how many times to repeat mutation process with a chance of `r_mut`, (defaults to `None`, meaning it mutates once)
+- `type_rules`: A dictionary in the following format that specifies what values a given type can mutate into, (defaults to `None`):
+
+```python
+{
+  0 : [1, 2, 3],
+  1 : [0, 3],
+  2 : [],
+  3 : [1, 2],
+  ...
+}
+```
+
+- `vertex_rules`: A tuple of two 1D numpy uint32 or uint64 arrays, which respectively represent what types can be added or deleted, (defaults to `None`)
+- `edge_rules`: A ruleset in the following format specifying which nodes can connect to one another by edges, (defaults to `None`):
+
+```python
+{
+  0 : [1, 2, 3],
+  1 : [0, 3],
+  2 : [],
+  3 : [1, 2],
+  ...
+}
+```
+
+- `possible_edges`: A 1D numpy float32 array of length 2 that specifes the lower and upper bound the edges can be generated within, defaults to `None` meaning that all edges will default to be generated with the value of 1.0
+- `weight_rules`: A tuple of two floats, a lower bound and upper bound for mutating the value of an edge, (defaults to `None` meaning all edges generated will be 1.0)
 
 ---
 

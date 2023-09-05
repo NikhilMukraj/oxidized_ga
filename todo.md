@@ -1,10 +1,12 @@
 # todo
 
+- check if `reps` value in graph mutation is greater than 0
 - default disconnected_nodes param in Graph.get_connected_component to be None, if None pass in an empty `Vec<usize>` on the rust side
-- change `oxidized_ga.Graph.mutate_edges(rules, edges)` such that the edges parameter is a tuple instead of a numpy array of a certain size
+- change `oxidized_ga.Graph.mutate_edges(rules, edges)` such that the edges parameter is a tuple instead of a numpy array of a certain size, update general mutate function accordingly
 - determine what specific numpy datatype usize needs when converting from numpy array
 - make the parameters to neural network initializer take the layers and just use that to calculate the size
 - change neuralnetwork archectiure function to take in a list of the activation functions and shapes, change it so the full shape of the weights is calculated automatically so you only need to specify one dimension in each layer (add an end layer type with the final output shape)
+- update docs accordingly
 - try running with maturin or cargo --release flag to see how much that speeds up operations
   - maturin develop --release
 - cleaner objective function errors
