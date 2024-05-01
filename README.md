@@ -582,6 +582,7 @@ Performs a genetic algorithm using the provided objective function ultizing the 
 
 ## To Do
 
+- Replace threadpoolexecution with processorpoolexecution
 - Create `oxidized_ga.Graph.delete_vertex` function
 - Wrap `oxidized_ga.graph_genetic_algo` in python function, and add default parameters on Rust side of the code through `pyo3` attribute
 - Create tree and undirected graph classes

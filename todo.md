@@ -1,5 +1,6 @@
 # todo
 
+- replace threadpoolexecution with processorpoolexecution
 - check if `reps` value in graph mutation is greater than 0
 - default disconnected_nodes param in Graph.get_connected_component to be None, if None pass in an empty `Vec<usize>` on the rust side
 - change `oxidized_ga.Graph.mutate_edges(rules, edges)` such that the edges parameter is a tuple instead of a numpy array of a certain size, update general mutate function accordingly
@@ -18,6 +19,7 @@
 - py wrappers for convenience
 - rewrite underlying graph struct to be in rust and then write a pyclass wrapper
 - write underlying rust tree and undirected graph structs
+  - [https://stackoverflow.com/questions/31185585/methods-shared-among-structs]
 - make sure they implement the different kinds of mutation
 - and they implement the different kinds of vertex and edge methods
 - store rules for how end nodes mutate within the struct for the tree itself
