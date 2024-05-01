@@ -334,7 +334,7 @@ fn genetic_algo(
         // generate next population
         let selected: Vec<BitString> = match workers {
             1.. => {
-                    let new_strings = (0..n_pop)
+                let new_strings = (0..n_pop)
                     .into_par_iter()
                     .map(|_| selector::selection(&pop, &scores, k))
                     .collect();
