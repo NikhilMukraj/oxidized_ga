@@ -2,6 +2,7 @@
 /.venv
 /oxidized_ga/__pycache__
 /oxidized_ga/*.so
-*.pyx
-*.py
-*.ipynb
+/oxidized_ga/*.pyc
+/*.pyx
+/*.py
+/*.ipynb
